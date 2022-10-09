@@ -1,0 +1,6 @@
+xterm*faceName: DejaVu Sans Mono Book
+xterm*faceSize: 11
+
+xterm*metaSendsEscape: true
+
+xterm*charClass: 33:48,36-47:48,58-59:48,61:48,63-64:48,95:48,126:48
