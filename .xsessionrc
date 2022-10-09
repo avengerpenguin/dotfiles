@@ -1,0 +1,5 @@
+#!/bin/bash
+
+feh --bg-scale wallpaper.jpg &
+
+exec xmonad
