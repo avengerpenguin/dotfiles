@@ -7,6 +7,7 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.EZConfig (additionalKeys)
 import Data.List (isInfixOf, isPrefixOf)
+import qualified XMonad.StackSet as W
 
 {-
 main = xmonad def

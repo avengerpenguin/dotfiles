@@ -1,0 +1,16 @@
+#!/bin/bash
+
+function use_pip() {
+    local has_pip=0
+    if has pip; then
+        if [[ $(which pip) = $PWD/* ]]; then
+            has_pip=1
+        fi
+    fi
+    if [ $has_pip -eq 0 ]; then
+        echo "[use pip-tools] No pip installed via layout; try layout pyenv or layout python"
+        return 1
+    fi
+    echo pip install -e ${PWD}[test]
+    watch_file setup.py
+}
