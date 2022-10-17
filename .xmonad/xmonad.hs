@@ -28,6 +28,22 @@ myKeys = [ ((myModMask, xK_f), spawn "firefox")
          , ((myModMask, xK_F7), spawn "amixer -q sset Master 5%+")
          ]
 
+manageZoomHook =
+  composeAll $
+    [ (className =? zoomClassName) <&&> shouldFloat <$> title --> doFloat,
+      (className =? zoomClassName) <&&> shouldSink <$> title --> doSink
+    ]
+  where
+    zoomClassName = "zoom"
+    tileTitles =
+      [ "Zoom - Free Account", -- main window
+        "Zoom - Licensed Account", -- main window
+        "Zoom", -- meeting window on creation
+        "Zoom Meeting" -- meeting window shortly after creation
+      ]
+    shouldFloat title = title `notElem` tileTitles
+    shouldSink title = title `elem` tileTitles
+    doSink = (ask >>= doF . W.sink) <+> doF W.swapDown
 
 myStartupHook = do
   startupHook defaultConfig
@@ -40,7 +56,7 @@ myConfig = def
   { terminal = "xterm"
   , modMask = myModMask
   , layoutHook = smartBorders $ layoutHook defaultConfig
-  , manageHook = (isFullscreen --> doFullFloat) <+> (fmap ("mpv" `isPrefixOf`) title --> doFullFloat) <+> (className =? "sdl" --> doFullFloat) <+> manageDocks <+> manageHook defaultConfig
+  , manageHook = (isFullscreen --> doFullFloat) <+> (fmap ("mpv" `isPrefixOf`) title --> doFullFloat) <+> (className =? "sdl" --> doFullFloat) <+> manageZoomHook <+> manageDocks <+> manageHook defaultConfig
   , focusedBorderColor = myFocusedBorderColor
   , normalBorderColor  = myNormalBorderColor
   , startupHook = myStartupHook
@@ -63,7 +79,7 @@ main = do
     xmproc <- spawnPipe "/usr/bin/xmobar"
     xmonad $ defaultConfig
         { startupHook = setWMName "LG3D"
-        , manageHook = manageDocks <+> manageHook defaultConfig
+        , manageHook = manageDocks <+> (isFullscreen --> doFullFloat) <+> manageHook defaultConfig
         , layoutHook = smartBorders $ avoidStruts  $  layoutHook defaultConfig
         , logHook = dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc

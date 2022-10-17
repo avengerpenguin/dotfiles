@@ -2,4 +2,6 @@
 
 feh --bg-scale wallpaper.jpg &
 
-exec xmonad
+. $HOME/.profile
+
+xmonad
