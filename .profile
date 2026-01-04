@@ -26,8 +26,10 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export SSH_AUTH_SOCK=~/.ssh/ssh-agent.$HOSTNAME.sock
-ssh-add -l 2>/dev/null >/dev/null
-if [ $? -ge 2 ]; then
-  ssh-agent -a "$SSH_AUTH_SOCK" >/dev/null
-fi
+#export SSH_AUTH_SOCK="$HOME/.ssh/ssh-agent.$(hostname).sock"
+export SSH_AUTH_SOCK=/run/user/1000/ssh-agent.socket
+ssh-add
+
+# Added by Toolbox App
+export PATH="$PATH:/home/ross/.local/share/JetBrains/Toolbox/scripts"
+

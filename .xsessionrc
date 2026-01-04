@@ -1,7 +1,9 @@
 #!/bin/bash
 
-feh --bg-scale wallpaper.jpg &
+feh --bg-scale wallpaper.webp &
 
 . $HOME/.profile
+
+#systemctl --user enable --now ulauncher
 
 xmonad

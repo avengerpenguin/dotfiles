@@ -1,5 +1,5 @@
 Config { overrideRedirect = False
-       , font = "xft:Fira Code Retina:size=12"
+       , font = "xft:DejaVu Sans Mono Book:size=12"
        , additionalFonts = ["xft:FontAwesome:size=1"]
        , template = "%StdinReader% }{ Vol: %alsa:default:Master% | %memory% | %EGCC% | %date% "
    , commands = 
